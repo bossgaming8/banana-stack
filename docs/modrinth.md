@@ -1,6 +1,6 @@
 <div align="center">
 
-![Banana Stack](https://raw.githubusercontent.com/bossgaming8/banana-stack/main/docs/assets/banana-stack-logo.png)
+<img src="https://raw.githubusercontent.com/bossgaming8/banana-stack/main/docs/assets/banana-stack-logo.png" alt="Banana Stack" width="560">
 
 [![Discord](https://raw.githubusercontent.com/bossgaming8/banana-stack/main/docs/assets/badges/discord.png)](https://discord.gg/bananasandwich)&nbsp;&nbsp;
 [![Issues](https://raw.githubusercontent.com/bossgaming8/banana-stack/main/docs/assets/badges/issues.png)](https://github.com/bossgaming8/banana-stack/issues)&nbsp;&nbsp;
