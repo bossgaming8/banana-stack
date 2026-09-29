@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "bananastack",
+	"version": "${version}",
+	"name": "Banana Stack",
+	"description": "Hop on other players' heads and stack up into towers. Server-side: players don't need to install anything.",
+	"authors": [
+		"Bhored"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/banana-stack",
+		"sources": "https://github.com/bossgaming8/banana-stack",
+		"issues": "https://github.com/bossgaming8/banana-stack/issues"
+	},
+	"license": "All-Rights-Reserved",
+	"icon": "assets/bananastack/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"dev.bhored.bananastack.BananaStack"
+		]
+	},
+	"mixins": [
+		"bananastack.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	},
+	"custom": {
+		"modmenu": {
+			"links": {
+				"modmenu.discord": "https://discord.gg/bananasandwich",
+				"modmenu.website": "https://www.bananasandwich.us"
+			}
+		}
+	}
+}

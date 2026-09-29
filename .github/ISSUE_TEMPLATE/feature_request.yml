@@ -1,0 +1,15 @@
+name: Feature request
+description: Suggest something new for Banana Stack.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: What would you use it for?
+      description: Knowing how your server plays helps a lot.

@@ -1,0 +1,89 @@
+plugins {
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
+}
+
+version = "${project.mod_version}+${project.minecraft_version}"
+group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
+
+repositories {
+	mavenCentral()
+}
+
+fabricApi {
+	configureTests {
+		createSourceSet = true
+		modId = 'bananastack-test'
+		enableGameTests = true
+		enableClientGameTests = true
+		eula = true
+	}
+}
+
+// ./gradlew runClientGameTest -Pshowcase films the Modrinth screenshots and clip instead of running the tests. It needs a
+// local showcase/ folder (not in git): world/ to film in, mods/ with Sodium and Iris, and shaderpacks/.
+if (project.hasProperty('showcase')) {
+	dependencies {
+		localRuntime fileTree(dir: 'showcase/mods', include: '*.jar')
+	}
+	tasks.named('runClientGameTest') {
+		def runDir = file('build/run/clientGameTest')
+		doFirst {
+			copy {
+				from 'showcase/shaderpacks'
+				into "${runDir}/shaderpacks"
+			}
+			copy {
+				from 'showcase/world'
+				into "${runDir}/saves/showcase"
+				exclude 'session.lock', 'players/**', 'datapacks/bukkit/**'
+			}
+			// Paper keeps the generator settings per dimension; vanilla looks for them at the world root.
+			copy {
+				from 'showcase/world/dimensions/minecraft/overworld/data/minecraft/world_gen_settings.dat'
+				into "${runDir}/saves/showcase/data/minecraft"
+			}
+		}
+		maxHeapSize = '6G'
+		jvmArgs '-Dbananastack.showcase=true'
+		jvmArgs "-Dbananastack.shots=${project.findProperty('shots') ?: 'tower,tall,piggyback,shake,clip,icon,keyed'}"
+	}
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+
+	// LuckPerms and other permission mods read the bananastack.* nodes through this; it's tiny, so it ships inside the jar.
+	include(implementation("me.lucko:fabric-permissions-api:${project.permissions_api_version}"))
+}
+
+processResources {
+	inputs.property 'version', project.version
+
+	filesMatching('fabric.mod.json') {
+		expand 'version': inputs.properties.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = 25
+}
+
+java {
+	withSourcesJar()
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
+}
+
+jar {
+	inputs.property 'archivesName', project.base.archivesName
+
+	from('LICENSE') {
+		rename { "${it}_${inputs.properties.archivesName}" }
+	}
+}

@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "dev.bhored.bananastack.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"mixins": [
+		"EntityMixin",
+		"PlayerListMixin",
+		"ServerEntityMixin",
+		"ServerPlayerMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
